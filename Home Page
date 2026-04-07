@@ -1,0 +1,21 @@
+import { View, Text, StyleSheet } from "react-native";
+import PageHeader from "../../components/PageHeader";
+import ContentCard from "../../components/ContentCard";
+
+export default function Home() {
+  return (
+    <View style={styles.container}>
+      <PageHeader title="PartyHub" />
+
+      <ContentCard>
+        <Text style={styles.title}>Welcome 🎉</Text>
+        <Text>Plan your events easily with PartyHub.</Text>
+      </ContentCard>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 16 },
+  title: { fontSize: 20, fontWeight: "bold" },
+});
