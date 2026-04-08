@@ -1,0 +1,163 @@
+import React, { useState } from "react";
+import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity } from "react-native";
+
+export default function EventManager() {
+
+  const [events, setEvents] = useState([]);
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [editingId, setEditingId] = useState(null);
+
+  const addEvent = () => {
+    if (title === "" || date === "" || description === "") return;
+
+    const newEvent = {
+      id: Date.now().toString(),
+      title: title,
+      date: date,
+      description: description,
+    };
+
+    setEvents([...events, newEvent]);
+    clearFields();
+  };
+
+  const deleteEvent = (id) => {
+    setEvents(events.filter(event => event.id !== id));
+  };
+
+  const editEvent = (event) => {
+    setTitle(event.title);
+    setDate(event.date);
+    setDescription(event.description);
+    setEditingId(event.id);
+  };
+
+  const updateEvent = () => {
+    const updatedEvents = events.map(event =>
+      event.id === editingId
+        ? { ...event, title: title, date: date, description: description }
+        : event
+    );
+
+    setEvents(updatedEvents);
+    setEditingId(null);
+    clearFields();
+  };
+
+  const clearFields = () => {
+    setTitle("");
+    setDate("");
+    setDescription("");
+  };
+
+  const renderItem = ({ item }) => (
+    <View style={styles.eventCard}>
+      <Text style={styles.eventTitle}>{item.title}</Text>
+      <Text>Date: {item.date}</Text>
+      <Text>{item.description}</Text>
+
+      <View style={styles.buttonRow}>
+        <TouchableOpacity onPress={() => editEvent(item)}>
+          <Text style={styles.editBtn}>Edit</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => deleteEvent(item.id)}>
+          <Text style={styles.deleteBtn}>Delete</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+
+      <Text style={styles.header}>Event Management</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Event Title"
+        value={title}
+        onChangeText={setTitle}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Event Date"
+        value={date}
+        onChangeText={setDate}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Event Description"
+        value={description}
+        onChangeText={setDescription}
+      />
+
+      {editingId ? (
+        <Button title="Update Event" onPress={updateEvent} />
+      ) : (
+        <Button title="Add Event" onPress={addEvent} />
+      )}
+
+      <FlatList
+        data={events}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+        style={{ marginTop: 20 }}
+      />
+
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#fff"
+  },
+
+  header: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 15
+  },
+
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5
+  },
+
+  eventCard: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    padding: 15,
+    marginBottom: 10,
+    borderRadius: 6
+  },
+
+  eventTitle: {
+    fontSize: 16,
+    fontWeight: "bold"
+  },
+
+  buttonRow: {
+    flexDirection: "row",
+    marginTop: 10
+  },
+
+  editBtn: {
+    marginRight: 20,
+    color: "blue"
+  },
+
+  deleteBtn: {
+    color: "red"
+  }
+});
