@@ -1,0 +1,87 @@
+import React from "react";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+
+const events = [
+  {
+    id: "1",
+    title: "Birthday Celebration",
+    date: "2026-05-10",
+    location: "Colombo Banquet Hall",
+    description: "A fun birthday celebration with music and games."
+  },
+  {
+    id: "2",
+    title: "Wedding Party",
+    date: "2026-06-15",
+    location: "Grand Ballroom",
+    description: "A beautiful wedding celebration with family and friends."
+  },
+  {
+    id: "3",
+    title: "Corporate Event",
+    date: "2026-07-20",
+    location: "City Conference Center",
+    description: "A professional networking and celebration event."
+  }
+];
+
+export default function EventDisplayScreen() {
+
+  const renderEvent = ({ item }) => (
+    <View style={styles.card}>
+      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.text}>Date: {item.date}</Text>
+      <Text style={styles.text}>Location: {item.location}</Text>
+      <Text style={styles.description}>{item.description}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Upcoming Events</Text>
+
+      <FlatList
+        data={events}
+        keyExtractor={(item) => item.id}
+        renderItem={renderEvent}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#ffffff"
+  },
+
+  header: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 15
+  },
+
+  card: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    padding: 15,
+    marginBottom: 12,
+    borderRadius: 8
+  },
+
+  title: {
+    fontSize: 18,
+    fontWeight: "bold"
+  },
+
+  text: {
+    fontSize: 14,
+    marginTop: 3
+  },
+
+  description: {
+    marginTop: 5,
+    color: "#555"
+  }
+});
