@@ -1,0 +1,80 @@
+import React from "react";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+
+export default function EventDetailsScreen() {
+
+  const event = {
+    title: "Music Night Party",
+    date: "2026-08-15",
+    venue: "Colombo City Hall",
+    organizer: "Party Hub Team",
+    description:
+      "Music Night Party is an exciting event featuring live music performances, entertainment activities, and social networking opportunities for all guests."
+  };
+
+  return (
+    <ScrollView style={styles.container}>
+
+      <Text style={styles.title}>{event.title}</Text>
+
+      <View style={styles.detailBox}>
+        <Text style={styles.label}>Date:</Text>
+        <Text style={styles.text}>{event.date}</Text>
+      </View>
+
+      <View style={styles.detailBox}>
+        <Text style={styles.label}>Venue:</Text>
+        <Text style={styles.text}>{event.venue}</Text>
+      </View>
+
+      <View style={styles.detailBox}>
+        <Text style={styles.label}>Organizer:</Text>
+        <Text style={styles.text}>{event.organizer}</Text>
+      </View>
+
+      <Text style={styles.descriptionTitle}>Event Description</Text>
+      <Text style={styles.description}>{event.description}</Text>
+
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#ffffff"
+  },
+
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20
+  },
+
+  detailBox: {
+    flexDirection: "row",
+    marginBottom: 10
+  },
+
+  label: {
+    fontWeight: "bold",
+    marginRight: 10
+  },
+
+  text: {
+    color: "#444"
+  },
+
+  descriptionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 20
+  },
+
+  description: {
+    marginTop: 8,
+    lineHeight: 20,
+    color: "#555"
+  }
+});
