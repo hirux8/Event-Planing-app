@@ -1,0 +1,57 @@
+import { Feather } from "@expo/vector-icons";
+import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useColors } from "@/hooks/useColors";
+import { PageHeader } from "@/components/PageHeader";
+import { ScheduleItem } from "@/components/ScheduleItem";
+
+const scheduleData = [
+  {
+    time: "9:00 AM",
+    title: "Welcome & Registration",
+    description: "Guests arrive and get their badges and event kits",
+    dotColor: "#e8789c",
+  },
+  {
+    time: "10:00 AM",
+    title: "Opening Ceremony",
+    description: "Kick off the celebration with a special opening",
+    dotColor: "#4caf8a",
+  },
+  {
+    time: "11:30 AM",
+    title: "Interactive Workshop",
+    description: "Hands-on activities and fun group sessions",
+    dotColor: "#6a8dff",
+  }
+];
+
+export default function ScheduleScreen() {
+  const colors = useColors();
+  const insets = useSafeAreaInsets();
+
+  return (
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <PageHeader title="Event Schedule" icon={<Feather name="calendar" size={24} />} />
+
+      <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}>
+        {scheduleData.map((item, index) => (
+          <ScheduleItem
+            key={index}
+            time={item.time}
+            title={item.title}
+            description={item.description}
+            dotColor={item.dotColor}
+          />
+        ))}
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+});
