@@ -1,0 +1,116 @@
+import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+
+export default function CreateEventScreen() {
+
+  const [eventTitle, setEventTitle] = useState("");
+  const [eventDate, setEventDate] = useState("");
+  const [eventLocation, setEventLocation] = useState("");
+  const [eventDescription, setEventDescription] = useState("");
+
+  const handleCreateEvent = () => {
+
+    if (
+      eventTitle === "" ||
+      eventDate === "" ||
+      eventLocation === "" ||
+      eventDescription === ""
+    ) {
+      Alert.alert("Error", "Please fill all fields");
+      return;
+    }
+
+    const newEvent = {
+      title: eventTitle,
+      date: eventDate,
+      location: eventLocation,
+      description: eventDescription
+    };
+
+    console.log("New Event Created:", newEvent);
+
+    Alert.alert("Success", "Event created successfully");
+
+    setEventTitle("");
+    setEventDate("");
+    setEventLocation("");
+    setEventDescription("");
+  };
+
+  return (
+    <View style={styles.container}>
+
+      <Text style={styles.header}>Create New Event</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Event Title"
+        value={eventTitle}
+        onChangeText={setEventTitle}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Event Date"
+        value={eventDate}
+        onChangeText={setEventDate}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Event Location"
+        value={eventLocation}
+        onChangeText={setEventLocation}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Event Description"
+        value={eventDescription}
+        onChangeText={setEventDescription}
+        multiline={true}
+      />
+
+      <TouchableOpacity style={styles.button} onPress={handleCreateEvent}>
+        <Text style={styles.buttonText}>Create Event</Text>
+      </TouchableOpacity>
+
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#ffffff"
+  },
+
+  header: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 20
+  },
+
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 15
+  },
+
+  button: {
+    backgroundColor: "#6a8dff",
+    padding: 12,
+    borderRadius: 5,
+    alignItems: "center"
+  },
+
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold"
+  }
+
+});
